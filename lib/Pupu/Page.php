@@ -5,15 +5,26 @@ class Pupu_Page
     private $__modified = array();
     private $data = false;
     private $fields = false;
+    private $children = false;
 
-    function __construct($uri)
+    static private $cache = array();
+
+    function __construct($arg)
     {
-        if($uri === NULL) {
+        if(is_array($arg) || is_object($art)) {
+            $this->data = (object)$arg;
+            return;
+        }
+
+        if($arg === NULL) {
             $stmt = Pupu::$db->query("SELECT * FROM page WHERE uri IS NULL");
             $stmt->execute();
+        } else if(is_integer($arg)) {
+            $stmt = Pupu::$db->query("SELECT * FROM page WHERE id = ?");
+            $stmt->execute(array($arg));
         } else {
             $stmt = Pupu::$db->query("SELECT * FROM page WHERE uri = ?");
-            $stmt->execute(array($uri));
+            $stmt->execute(array($arg));
         }
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
@@ -25,8 +36,19 @@ class Pupu_Page
         foreach($row as $key => $value) {
             $this->data->$key = $value;
         }
+    }
 
-        /* get all fields */
+    static function get($arg = NULL)
+    {
+        if(!is_string($arg) && !is_integer($arg) && ($arg !== NULL))
+            throw new Exception('Static getting support only id and uri');
+        if(!array_key_exists($arg, Pupu_Page::$cache))
+            Pupu_Page::$cache[$arg] = new Pupu_Page($arg);
+        return Pupu_Page::$cache[$arg];
+    }
+
+    function updateFields()
+    {
         $stmt = Pupu::$db->prepare("SELECT * FROM page_data WHERE page_id = ?");
         $stmt->execute(array($this->data->id));
         $this->fields = (object)false;
@@ -38,8 +60,50 @@ class Pupu_Page
 
     function __get($key)
     {
+        if($key == 'children') {
+            $stmt = Pupu::$db->query("SELECT * FROM page WHERE parent_id = ?");
+            $stmt->execute(array($this->data->id));
+            $this->children = array();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $data = array();
+                foreach($row as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $this->children[] = new Pupu_Page($data);
+            }
+
+            return $this->children;
+        }
+
+        if($key == 'parent') {
+            if($this->data->parent_id == NULL)
+                return NULL;
+
+            $stmt = Pupu::$db->query("SELECT * FROM page WHERE id = ?");
+            $stmt->execute(array($this->data->parent_id));
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+
+            $data = array();
+            foreach($row as $key => $value) {
+                $data[$key] = $value;
+            }
+
+            $this->parent = new Pupu_Page($data);
+            return $this->parent;
+        }
+
+        if($key == 'uri') {
+            if(Pupu::$config->uri == 'id') {
+                return Pupu::baseUri().'index.php?id='.$this->id;
+            }
+        }
+
         if(property_exists($this->data, $key))
             return $this->data->$key;
+
+        if($this->fields === false)
+            $this->updateFields();
 
         return $this->fields->$key;
     }
@@ -80,6 +144,9 @@ class Pupu_Page
 
     function field($name, $type = 'html', $options = array())
     {
+        if($this->fields === false)
+            $this->updateFields();
+
         if(!property_exists($this->fields, $name)) {
             $stmt = Pupu::$db->prepare("INSERT INTO page_data(page_id, field) VALUES(?, ?)");
             $stmt->execute(array($this->data->id, $name));

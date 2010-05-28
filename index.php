@@ -20,8 +20,16 @@
 
     Pupu::initDb();
 
+    if(isset($_REQUEST['id'])) {
+        $uri = intval($_REQUEST['id']);
+    } else if(isset($_REQUEST['uri'])) {
+        $uri = $_REQUEST['uri'];
+    } else {
+        $uri = NULL;
+    }
+
     try {
-        $PUPU_PAGE = new Pupu_Page($_REQUEST['uri']);
+        $PAGE = new Pupu_Page($uri);
     } catch(Exception $e) {
         header('HTTP/1.1 404 Page Not Found');
         header('Content-type: text/plain');
@@ -30,5 +38,7 @@
         exit;
     }
 
-    require_once($PUPU_PAGE->getTemplate());
+    unset($uri);
+
+    require_once($PAGE->getTemplate());
 ?>
