@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="styles/screen.css" media="screen" />
     </head>
     <body>
-        <h1><?php $PAGE->field('header', 'text'); ?></h1>
+        <h1><?php $PAGE->field('header', 'label'); ?></h1>
         <hr />
             <ul>
                 <li><a href="<?php echo Pupu_Page::get()->uri ?>"><?php echo Pupu_Page::get()->title ?></a></li>

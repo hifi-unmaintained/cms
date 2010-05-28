@@ -94,6 +94,9 @@ class Pupu_Page
         }
 
         if($key == 'uri') {
+            if(PUPU_MODE == 'edit')
+                return Pupu::baseUri().'page.php?id='.$this->id;
+
             if(Pupu::$config->uri == 'id') {
                 return Pupu::baseUri().'index.php?id='.$this->id;
             }
@@ -160,9 +163,9 @@ class Pupu_Page
 
         try {
             if(PUPU_MODE == 'view') {
-                $class::view($name, $this->fields->$name);
+                $class::view($this->id, $name, $this->fields->$name);
             } else if(PUPU_MODE == 'edit') {
-                $class::edit($name, $this->fields->$name);
+                $class::edit($this->id, $name, $this->fields->$name);
             }
         } catch(Exception $e) {
             throw new Exception('Unkown field type, class not found for '.$type);
