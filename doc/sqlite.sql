@@ -1,5 +1,5 @@
 --
--- HippoCMS SQLite structure
+-- PupuCMS SQLite structure
 --
 
 PRAGMA foreign_keys = 1;

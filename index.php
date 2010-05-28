@@ -1,6 +1,6 @@
 <?php
     define('INCLUDE_ROOT', getcwd());
-    define('HIPPO_MODE', 'view');
+    define('PUPU_MODE', 'view');
 
     set_include_path(get_include_path().":".INCLUDE_ROOT."/lib/");
 
@@ -18,10 +18,10 @@
 
     require_once('config.inc.php');
 
-    Hippo::initDb();
+    Pupu::initDb();
 
     try {
-        $HIPPO_PAGE = new Hippo_Page($_REQUEST['uri']);
+        $PUPU_PAGE = new Pupu_Page($_REQUEST['uri']);
     } catch(Exception $e) {
         header('HTTP/1.1 404 Page Not Found');
         header('Content-type: text/plain');
@@ -30,5 +30,5 @@
         exit;
     }
 
-    require_once($HIPPO_PAGE->getTemplate());
+    require_once($PUPU_PAGE->getTemplate());
 ?>
