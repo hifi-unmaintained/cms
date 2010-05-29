@@ -2,9 +2,9 @@ $().ready(function() {
 
     /* make windows behave like windows */
     $('div.cms_window').draggable();
-    $('div.cms_window').resizable();
+    //$('div.cms_window').resizable();
     $('div.cms_window_nofade').draggable();
-    $('div.cms_window_nofade').resizable();
+    //$('div.cms_window_nofade').resizable();
 
     /* handle hover opacity */
     $('div.cms_window').mouseover(function() { $(this).fadeTo(0, 1); });
@@ -45,8 +45,6 @@ $().ready(function() {
     var el_width = $('#cms_login').width();
     $('#cms_login').css('left', win_width/2 - el_width/2);
     $('#cms_login').css('top', win_height/2 - el_height/2);
-
-    //$('#cms_login').show();
 
     cms_load();
 });
