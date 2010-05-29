@@ -1,6 +1,12 @@
 <?php
     define('INCLUDE_ROOT', getcwd().'/../');
-    define('CMS_MODE', 'edit');
+    session_start();
+
+    if(isset($_SESSION['logged_in'])) {
+        define('CMS_MODE', 'edit');
+    } else {
+        define('CMS_MODE', 'view');
+    }
 
     require_once('../config.inc.php');
 

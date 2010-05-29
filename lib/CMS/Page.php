@@ -116,6 +116,9 @@ class CMS_Page
         if(property_exists($this->data, $key))
             throw new Exception('Trying to modify read-only field');
 
+        if($this->fields === false)
+            $this->updateFields();
+
         if(!property_exists($this->fields, $key))
             throw new Exception('Trying to modify non-existent field');
 

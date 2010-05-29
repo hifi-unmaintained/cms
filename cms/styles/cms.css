@@ -1,0 +1,121 @@
+* { margin: 0; padding: 0; border: 0; }
+
+html,body { height: 100%; width: 100%; }
+
+input {
+    border: 1px solid black;
+    padding: 2px;
+}
+
+#cms_page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#cms_page iframe {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+
+#cms_ajax {
+    position: absolute;
+    display: none;
+    border: 1px dotted black;
+    background-color: white;
+    padding: 0 20px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+div.cms_window, div.cms_window_nofade {
+    display: none;
+    z-index: 2;
+    position: absolute;
+    background-color: white;
+    border: 1px dotted black;
+}
+
+div.cms_window h2, div.cms_window_nofade h2 {
+    text-align: center;
+    font-size: 11pt;
+    height: 20px;
+    line-height: 20px;
+    border-bottom: 1px dotted black;
+    background-color: #f4f4f4;
+}
+
+div.cms_window div.buttons, div.cms_window_nofade div.buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
+div.cms_window div.buttons div, div.cms_window_nofade div.buttons div {
+    border-left: 1px dotted black;
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+div.cms_window div.buttons div:hover, div.cms_window_nofade div.buttons div:hover {
+    background-color: #f4f4f4;
+}
+
+#cms_options {
+    top: 10px;
+    left: 170px;
+    height: 35px;
+    width: 800px;
+}
+
+#cms_tools {
+    left: 10px;
+    top: 10px;
+    width: 150px;
+    height: 300px;
+}
+
+#cms_tinymce {
+    width: 800px;
+}
+
+#cms_tinymce textarea {
+    width: 800px;
+    height: 450px;
+}
+
+#cms_tinymce input {
+    float: right;
+    border-top: 1px dotted black;
+    border-left: 1px dotted black;
+    padding: 3px;
+    font-size: 11pt;
+    margin-top: 3px;
+}
+
+/* resizable stuff for jq */
+.ui-resizable { position: relative;} 
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;} 
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable- autohide .ui-resizable-handle { display: none; } 
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0px; } 
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0px; } 
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0px; height: 100%; } 
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0px; height: 100%; } 
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; } 
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; } 
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; } 
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;} 
+
