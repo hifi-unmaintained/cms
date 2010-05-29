@@ -60,7 +60,7 @@ function CMS_Field(page_id, field, type)
             if(type == 'html')
                 cms_tinymce(page_id, field, data.d);
             if(type == 'label')
-                alert('not implemented');
+                cms_label(page_id, field, data.d);
         }
     }});
 }
@@ -94,6 +94,26 @@ function cms_tinymce(page_id, field, data)
     $('#cms_tinymce').css('top', win_height/2 - el_height/2);
 
     $('#cms_tinymce').show();
+}
+
+function cms_label(page_id, field, data)
+{
+    var win_height = $(window).height();
+    var win_width = $(window).width();
+    var el_height = $('#cms_label').height();
+    var el_width = $('#cms_label').width();
+
+    if(data === null)
+        data = '';
+
+    $('#cms_label input[name=value]').attr('value', data);
+    $('#cms_label input[name=page_id]').attr('value', page_id);
+    $('#cms_label input[name=field]').attr('value', field);
+
+    $('#cms_label').css('left', win_width/2 - el_width/2);
+    $('#cms_label').css('top', win_height/2 - el_height/2);
+
+    $('#cms_label').show();
 }
 
 function cms_message(msg)

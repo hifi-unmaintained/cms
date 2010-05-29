@@ -38,6 +38,19 @@
             <input type="button" value="Save" onclick="javascript:$('#cms_tinymce').hide(); CMS_Save(form.page_id.value, form.field.value, $('#cms_tinymce textarea').html());" />
             </form>
         </div>
+        <div id="cms_label" class="cms_window_nofade">
+            <h2>Label Editor</h2>
+            <div class="buttons">
+                <div class="close" onclick="javascript:$('#cms_label').hide()">X</div>
+            </div>
+            <form>
+            <input type="hidden" name="page_id" />
+            <input type="hidden" name="field" />
+            <input style="width: 440px" name="value" value="" />
+            <hr />
+            <input class="save" type="button" value="Save" onclick="javascript:$('#cms_label').hide(); CMS_Save(form.page_id.value, form.field.value, form.value.value);" />
+            </form>
+        </div>
         <div id="cms_page">
             <iframe src=""></iframe>
         </div>

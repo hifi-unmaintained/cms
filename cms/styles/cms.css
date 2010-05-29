@@ -88,7 +88,7 @@ div.cms_window div.buttons div:hover, div.cms_window_nofade div.buttons div:hove
     height: 300px;
 }
 
-#cms_tinymce {
+#cms_tinymce, #cms_label {
     width: 800px;
 }
 
@@ -97,7 +97,7 @@ div.cms_window div.buttons div:hover, div.cms_window_nofade div.buttons div:hove
     height: 450px;
 }
 
-#cms_tinymce input {
+#cms_tinymce input, #cms_label input.save {
     float: right;
     border-top: 1px dotted black;
     border-left: 1px dotted black;
