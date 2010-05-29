@@ -12,16 +12,16 @@ function __autoload($class)
     }
 }
 
-Pupu::$config = (object)array(
+CMS::$config = (object)array(
     'db' => (object)array(
-        'dsn' => 'sqlite:'.INCLUDE_ROOT.'/db/pupu.db',
+        'dsn' => 'sqlite:'.INCLUDE_ROOT.'/db/cms.db',
         'username' => NULL,
         'password' => NULL,
         'options' => array(),
     ),
     'uri' => 'id', // 'prefix', id or pretty
     'users' => array(
-        'pupucms' => sha1(''),
+        'cms' => sha1(''),
     ),
 );
 

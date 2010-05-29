@@ -1,24 +1,24 @@
 <?php
 
-class Pupu
+class CMS
 {
     static public $db = false;
     static public $config = false;
 
     static function initDb()
     {
-        if(isset(Pupu::$config->db)) {
+        if(isset(CMS::$config->db)) {
             try {
-                Pupu::$db = new PDO(Pupu::$config->db->dsn, Pupu::$config->db->username, Pupu::$config->db->password, Pupu::$config->db->options);
+                CMS::$db = new PDO(CMS::$config->db->dsn, CMS::$config->db->username, CMS::$config->db->password, CMS::$config->db->options);
             } catch(PDOException $e) {
-                die('PupuCMS: DB connection failed: '.$e->getMessage());
+                die('CMSCMS: DB connection failed: '.$e->getMessage());
             }
         } else {
-            die('PupuCMS: No DB config.');
+            die('CMSCMS: No DB config.');
         }
 
         if(strncmp('sqlite:', $config->db->dsn, 7) != 0) {
-            Pupu::$db->query('PRAGMA foreign_keys = 1');
+            CMS::$db->query('PRAGMA foreign_keys = 1');
         }
     }
 
@@ -31,5 +31,5 @@ class Pupu
         return "{$proto}://{$_SERVER['HTTP_HOST']}".dirname($_SERVER['SCRIPT_NAME'])."/";
     }
 
-    function __construct() { throw new Exception('You should not construct Pupu, ever!'); }
+    function __construct() { throw new Exception('You should not construct CMS, ever!'); }
 }

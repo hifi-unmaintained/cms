@@ -1,5 +1,5 @@
 --
--- PupuCMS SQLite structure
+-- CMS SQLite structure
 --
 
 PRAGMA foreign_keys = 1;

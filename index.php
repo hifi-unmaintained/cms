@@ -1,10 +1,10 @@
 <?php
     define('INCLUDE_ROOT', getcwd());
-    define('PUPU_MODE', 'view');
+    define('CMS_MODE', 'view');
 
     require_once('config.inc.php');
 
-    Pupu::initDb();
+    CMS::initDb();
 
     if(isset($_REQUEST['id'])) {
         $uri = intval($_REQUEST['id']);
@@ -15,7 +15,7 @@
     }
 
     try {
-        $PAGE = new Pupu_Page($uri);
+        $PAGE = new CMS_Page($uri);
     } catch(Exception $e) {
         header('HTTP/1.1 404 Page Not Found');
         header('Content-type: text/plain');

@@ -1,15 +1,15 @@
 <?php
     define('INCLUDE_ROOT', getcwd().'/..');
-    define('PUPU_MODE', 'edit');
+    define('CMS_MODE', 'edit');
 
     session_start();
 
     require_once('../config.inc.php');
 
-    Pupu::initDb();
+    CMS::initDb();
 
     if($_POST) {
-        $users = Pupu::$config->users;
+        $users = CMS::$config->users;
         if(isset($users[$_POST['username']])) {
             if($users[$_POST['username']] == sha1($_POST['password'])) {
                 $_SESSION['logged_in'] = true;
@@ -24,13 +24,13 @@
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>PupuCMS</title>
+        <title>CMSCMS</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <base href="<?php echo Pupu::baseUri() ?>" />
+        <base href="<?php echo CMS::baseUri() ?>" />
         <link rel="stylesheet" type="text/css" href="layout/screen.css" media="screen" />
     </head>
     <body>
-        <h1>PupuCMS</h1>
+        <h1>CMS</h1>
         <h2>Login</h2>
         <form action="login.php" method="post">
         <p>

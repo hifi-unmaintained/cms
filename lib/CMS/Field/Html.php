@@ -1,6 +1,6 @@
 <?php
 
-class Pupu_Field_Html extends Pupu_Field
+class CMS_Field_Html extends CMS_Field
 {
     static function view($page_id, $field, $value)
     {
@@ -28,7 +28,7 @@ class Pupu_Field_Html extends Pupu_Field
                 font-family: sans-serif;
                 border-left: 1px dotted black;
                 border-bottom: 1px dotted black;
-    " href="javascript:parent.Pupu_Field('$page_id', '$field', 'html');">Edit</a>
+    " href="javascript:parent.CMS_Field('$page_id', '$field', 'html');">Edit</a>
 EOF;
         print $value;
         print <<<EOF
