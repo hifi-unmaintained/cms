@@ -195,7 +195,7 @@ var CMS = new Object();
                 open = true;
             for(var i in pages) {
                 var page = pages[i];
-                if(i == 0)
+                if(page.parent_id == null)
                     CMS.currentPage = page.id;
                 str += CMS.addTreeNode(page);
             }
@@ -285,12 +285,7 @@ var CMS = new Object();
 
     CMS.logoutCallback = function(success, data)
     {
-        $('#cms_page iframe').attr('src', '');
-        $('#cms_login input').attr('value', '');
-        $('#cms_login').dialog('open');
-        CMS.hideUI();
-        /* bug in jQuery? */
-        setTimeout(CMS.hideUI, 300);
+        window.location = '';
     };
 
     CMS.query = function(q, data, cb)
