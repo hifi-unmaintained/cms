@@ -6,68 +6,97 @@
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>CMS</title>
+        <title>Management</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <base href="<?php echo CMS::baseUri() ?>" />
-        <link rel="stylesheet" type="text/css" href="styles/cms.css" media="screen" />
+        <link type="text/css" href="styles/themes/cupertino/jquery-ui-1.8.1.custom.css" rel="stylesheet" />	
+        <link type="text/css" href="styles/cms.css" rel="stylesheet" />	
         <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.1.custom.min.js"></script>
         <script type="text/javascript" src="js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
         <script type="text/javascript" src="js/CMS.js"></script>
     </head>
     <body>
-        <div id="cms_tools" class="cms_window">
-            <h2>CMS</h2>
-            <ul>
-                <li><a href="javascript:cms_logout();">&raquo; Logout</a></li>
+        <div id="cms_message"></div>
+        <div id="cms_login">
+            <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
+                <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+            </div>
+            Username:<br />
+            <input class="focus" type="text" name="username" /><br />
+            Password:<br />
+            <input type="password" name="password" />
+        </div>
+        <div id="cms_tools">
+            <div id="cms_tree">
+                <!--
+                <ul class="root">
+                    <li>
+                        <span class="ui-icon ui-icon-folder-collapsed"></span>
+                        <a class="title">juurisivu</a>
+                    </li>
+                    <li>
+                        <span class="ui-icon ui-icon-folder-open"></span>
+                        <a class="title">juurisivu</a>
+                        <ul>
+                            <li>
+                                <span class="ui-icon ui-icon-document"></span>
+                                <a>lapsi</a>
+                            </li>
+                            <li>
+                                <span class="ui-icon ui-icon-document"></span>
+                                <a>lapsi</a>
+                            </li>
+                            <li>
+                                <span class="ui-icon ui-icon-folder-collapsed"></span>
+                                <a>lapsi</a>
+                            </li>
+                            <li>
+                                <span class="ui-icon ui-icon-document"></span>
+                                <a>lapsi</a>
+                            </li>
+                            <li>
+                                <span class="ui-icon ui-icon-folder-open"></span>
+                                <a>lapsi</a>
+                                <ul>
+                                    <li>
+                                        <span class="ui-icon ui-icon-document"></span>
+                                        <a>lapsi</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                -->
+            </div>
+
+            <div class="ui-state-default hr"><hr /></div>
+
+            <ul class="menu">
+                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageNew();">New page</a></li>
+                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageDelete();">Delete page</a></li>
+                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageSettings();">Page settings</a></li>
             </ul>
-        </div>
-        <div id="cms_options" class="cms_window">
-            <h2>Options</h2>
-        </div>
-        <div id="cms_tinymce" class="cms_window_nofade">
-            <h2>HTML Editor</h2>
-            <div class="buttons">
-                <div class="close" onclick="javascript:$('#cms_tinymce').hide()">X</div>
-            </div>
-            <form>
-            <input type="hidden" name="page_id" />
-            <input type="hidden" name="field" />
-            <textarea name="value"></textarea>
-            <hr />
-            <input type="button" value="Save" onclick="javascript:$('#cms_tinymce').hide(); CMS_Save(form.page_id.value, form.field.value, $('#cms_tinymce textarea').html());" />
-            </form>
-        </div>
-        <div id="cms_label" class="cms_window_nofade">
-            <h2>Label Editor</h2>
-            <div class="buttons">
-                <div class="close" onclick="javascript:$('#cms_label').hide()">X</div>
-            </div>
-            <form>
-            <input type="hidden" name="page_id" />
-            <input type="hidden" name="field" />
-            <input style="width: 440px" name="value" value="" />
-            <hr />
-            <input class="save" type="button" value="Save" onclick="javascript:$('#cms_label').hide(); CMS_Save(form.page_id.value, form.field.value, form.value.value);" />
-            </form>
+
+            <div class="ui-state-default hr"><hr /></div>
+
+            <ul class="menu">
+                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.logout();">Logout</a></li>
+            </ul>
         </div>
         <div id="cms_page">
             <iframe src=""></iframe>
         </div>
-        <div id="cms_login" class="cms_window_nofade">
-            <h2>CMS Login</h2>
-            <div class="padding">
-                <form>
-                Username:<br />
-                <input type="text" name="username" /><br />
-                Password:<br />
-                <input type="password" name="password" /><br />
-                <input type="button" value="Login" onclick="javascript:cms_login(form.username.value, form.password.value);"/>
-                </form>
-            </div>
+        <div id="cms_tinymce">
+            <input type="hidden" name="page_id" />
+            <input type="hidden" name="field" />
+            <textarea name="value"></textarea>
         </div>
-        <div id="cms_ajax">
-            Pondering...
+        <div id="cms_label">
+            <input type="hidden" name="page_id" />
+            <input type="hidden" name="field" />
+            <input type="text" name="value" />
         </div>
     </body>
 </html>

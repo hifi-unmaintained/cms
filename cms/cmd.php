@@ -10,27 +10,27 @@
         'r' => 'error'
     );
 
-    if(isset($_POST['q']) && $_POST['q'] == 'login') {
-        if(isset(CMS::$config->users[$_POST['username']]) && CMS::$config->users[$_POST['username']] == sha1($_POST['password'])) {
+    if(isset($_REQUEST['q']) && $_REQUEST['q'] == 'login') {
+        if(isset(CMS::$config->users[$_REQUEST['d']['username']]) && CMS::$config->users[$_REQUEST['d']['username']] == sha1($_REQUEST['d']['password'])) {
             $_SESSION['logged_in'] = true;
             $reply['r'] = 'ok';
         }
     }
 
-    if(isset($_POST['q']) && $_POST['q'] == 'logout') {
+    if(isset($_REQUEST['q']) && $_REQUEST['q'] == 'logout') {
         unset($_SESSION['logged_in']);
         $reply['r'] = 'ok';
     }
 
-    if(isset($_POST['q']) && $_POST['q'] == 'session') {
+    if(isset($_REQUEST['q']) && $_REQUEST['q'] == 'session') {
         if(isset($_SESSION['logged_in']))
             $reply['r'] = 'ok';
     }
 
-    if(isset($_POST['q']) && $_POST['q'] == 'get') {
+    if(isset($_REQUEST['q']) && $_REQUEST['q'] == 'get') {
         if(isset($_SESSION['logged_in'])) {
-            $page_id = (int)$_POST['page_id'];
-            $field = $_POST['field'];
+            $page_id = (int)$_REQUEST['d']['page_id'];
+            $field = $_REQUEST['d']['field'];
 
             CMS::initDb();
 
@@ -44,18 +44,17 @@
         }
     }
 
-    if(isset($_POST['q']) && $_POST['q'] == 'set') {
+    if(isset($_REQUEST['q']) && $_REQUEST['q'] == 'set') {
         if(isset($_SESSION['logged_in'])) {
-            $page_id = (int)$_POST['page_id'];
-            $field = $_POST['field'];
+            $page_id = (int)$_REQUEST['d']['page_id'];
+            $field = $_REQUEST['d']['field'];
 
             CMS::initDb();
 
             try {
                 $PAGE = new CMS_Page($page_id);
                 $reply['r'] = 'ok';
-                $reply['page_id'] = $page_id;
-                $PAGE->$field = $_POST['value'];
+                $PAGE->$field = $_REQUEST['d']['value'];
                 $PAGE->save();
             } catch(Exception $e) {
                 $reply['r'] = 'error';

@@ -28,7 +28,7 @@ class CMS_Field_Html extends CMS_Field
                 font-family: sans-serif;
                 border-left: 1px dotted black;
                 border-bottom: 1px dotted black;
-    " href="javascript:parent.CMS_Field('$page_id', '$field', 'html');">Edit</a>
+    " href="javascript:parent.CMS.edit('$page_id', '$field', 'html');">Edit</a>
 EOF;
         print $value;
         print <<<EOF
