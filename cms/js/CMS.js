@@ -82,6 +82,8 @@ $().ready(function() {
         width : 'auto',
         height : 'auto',
         modal : true,
+        minWidth : 800,
+        minHeight : 500,
         dialogClass : 'cms_tinymce',
         zIndex : 1,
         buttons : {
@@ -118,14 +120,70 @@ $().ready(function() {
         },
     });
 
+    $('#cms_page iframe').load(function() {
+        var uri = $('#cms_page iframe')[0].contentWindow.location.href;
+        if(uri) {
+            var m = uri.match(/id=(\d+)$/);
+            if(m) {
+                CMS.pageOpen(m[1], true);
+            }
+        }
+    });
+
     CMS.checkSession();
 });
 
 var CMS = new Object();
 {
+    CMS.currentPage = 0;
+
     CMS.test = function() {
         var foo = $('#cms_page iframe')[0].contentWindow.location.href;
         alert(foo);
+    };
+
+    CMS.updateTree = function() {
+        CMS.query('tree', {}, CMS.updateTreeCallback);
+    };
+
+    CMS.updateTreeCallback = function(success, data) {
+        if(success) {
+            var pages = data.d;
+            var str = '<ul class="root">';
+            var open = false;
+            if(CMS.currentPage == 0)
+                open = true;
+            for(var i in pages) {
+                var page = pages[i];
+                if(i == 0)
+                    CMS.currentPage = page.id;
+                str += CMS.addTreeNode(page);
+            }
+            $('#cms_tree').html(str+"</ul>");
+            if(open && CMS.currentPage != 0)
+                CMS.pageOpen(CMS.currentPage);
+        }
+    };
+
+    CMS.addTreeNode = function(page) {
+        var str = '<li>';
+
+        if(page.children.length > 0) {
+            str += '<span class="ui-icon ui-icon-folder-open"></span>';
+        } else {
+            str += '<span class="ui-icon ui-icon-document"></span>';
+        }
+
+        str += '<a class="title" class="CMS_Tree_Page" id="CMS_Tree_Page_'+page.id+'" href="javascript:CMS.pageOpen('+page.id+')">'+page.title+'</a>';
+
+        if(page.children.length > 0) {
+            str += '<ul>';
+            for(var i in page.children) {
+                str += CMS.addTreeNode(page.children[i]);
+            }
+            str += '</ul>';
+        }
+        return str += '</li>';
     };
 
     CMS.hideUI = function() {
@@ -133,7 +191,7 @@ var CMS = new Object();
     };
 
     CMS.showUI = function() {
-        $('#cms_page iframe').attr('src', 'page.php');
+        CMS.updateTree();
         $('#cms_tools').dialog('open');
     };
 
@@ -248,29 +306,15 @@ var CMS = new Object();
 
     CMS.saveCallback = function(success, data, page_id)
     {
-        $('#cms_page iframe').attr('src', 'page.php?id='+page_id);
+        CMS.pageOpen(page_id);
     };
 
-    CMS.Field = new Object();
+    CMS.pageOpen = function(page_id, no_change)
     {
-        CMS.Field.edit = function(page_id, field, type)
-        {
-
-        };
-
-        CMS.Field.getCb = function(success, data)
-        {
-
-        };
-
-        CMS.Field.set = function(page_id, field, value)
-        {
-
-        };
-
-        CMS.Field.setCb = function(success, data)
-        {
-
-        };
+        if(typeof no_change == 'undefined')
+            $('#cms_page iframe').attr('src', 'page.php?id='+page_id);
+        $('#CMS_Tree_Page_'+CMS.currentPage).css('font-weight', 'normal');
+        CMS.currentPage = page_id;
+        $('#CMS_Tree_Page_'+page_id).css('font-weight', 'bold');
     };
 };

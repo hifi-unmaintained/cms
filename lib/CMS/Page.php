@@ -61,7 +61,7 @@ class CMS_Page
     function __get($key)
     {
         if($key == 'children') {
-            $stmt = CMS::$db->query("SELECT * FROM page WHERE parent_id = ?");
+            $stmt = CMS::$db->query("SELECT * FROM page WHERE parent_id = ? ORDER BY title ASC");
             $stmt->execute(array($this->data->id));
             $this->children = array();
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
