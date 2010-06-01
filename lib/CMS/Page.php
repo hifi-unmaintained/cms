@@ -17,7 +17,7 @@ class CMS_Page
         }
 
         if($arg === NULL) {
-            $stmt = CMS::$db->query("SELECT * FROM page WHERE uri IS NULL");
+            $stmt = CMS::$db->query("SELECT * FROM page WHERE parent_id IS NULL");
             $stmt->execute();
         } else if(is_integer($arg)) {
             $stmt = CMS::$db->query("SELECT * FROM page WHERE id = ?");

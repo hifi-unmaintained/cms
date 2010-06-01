@@ -28,48 +28,7 @@
             <input type="password" name="password" />
         </div>
         <div id="cms_tools">
-            <div id="cms_tree">
-                <!--
-                <ul class="root">
-                    <li>
-                        <span class="ui-icon ui-icon-folder-collapsed"></span>
-                        <a class="title">juurisivu</a>
-                    </li>
-                    <li>
-                        <span class="ui-icon ui-icon-folder-open"></span>
-                        <a class="title">juurisivu</a>
-                        <ul>
-                            <li>
-                                <span class="ui-icon ui-icon-document"></span>
-                                <a>lapsi</a>
-                            </li>
-                            <li>
-                                <span class="ui-icon ui-icon-document"></span>
-                                <a>lapsi</a>
-                            </li>
-                            <li>
-                                <span class="ui-icon ui-icon-folder-collapsed"></span>
-                                <a>lapsi</a>
-                            </li>
-                            <li>
-                                <span class="ui-icon ui-icon-document"></span>
-                                <a>lapsi</a>
-                            </li>
-                            <li>
-                                <span class="ui-icon ui-icon-folder-open"></span>
-                                <a>lapsi</a>
-                                <ul>
-                                    <li>
-                                        <span class="ui-icon ui-icon-document"></span>
-                                        <a>lapsi</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                -->
-            </div>
+            <div id="cms_tree"></div>
 
             <div class="ui-state-default hr"><hr /></div>
 
@@ -87,6 +46,17 @@
         </div>
         <div id="cms_page">
             <iframe src=""></iframe>
+        </div>
+        <div id="cms_page_new">
+            <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
+                <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+            </div>
+            Parent:<br />
+            <span class="parent"></span><br />
+            Title:<br />
+            <input class="text focus" type="text" name="title" /><br />
+            Template:<br />
+            <select name="template"></select>
         </div>
         <div id="cms_tinymce">
             <input type="hidden" name="page_id" />

@@ -48,6 +48,46 @@ $().ready(function() {
     $('.cms_tools').mouseover(function(ev) { $(this).fadeTo(0, 1); });
     $('.cms_tools').mouseout(function(ev) { $(this).fadeTo(0, 0.7); });
 
+    $('#cms_page_new').dialog({
+        autoOpen : false,
+        title : "New page",
+        resizable : false,
+        width : 400,
+        height : 'auto',
+        buttons : {
+            "Cancel" : function(ev, ui) { $('#cms_page_new').dialog('close'); },
+            "Create" : function(ev, ui) {
+                var title = $('#cms_page_new input[name=title]').attr('value');
+                var template = $('#cms_page_new select[name=template]').val();
+                var parent_id = CMS.currentPage ? CMS.currentPage : null;
+
+                if(title.length == 0) {
+                    $('#cms_page_new .error').html("Title can't be empty.");
+                    $('#cms_page_new .ui-state-error').show();
+                    $('#cms_page_new .focus').focus();
+                    return;
+                } else if(template.length == 0) {
+                    $('#cms_page_new .error').html("You must select a template.");
+                    $('#cms_page_new .ui-state-error').show();
+                    $('#cms_page_new .focus').focus();
+                    return;
+                }
+
+                $('#cms_page_new').dialog('close');
+                CMS.query('page_new', { parent_id : parent_id, title : title, template : template }, CMS.updateTree);
+            },
+        },
+        open : function() {
+            var parent = CMS.currentPage;
+            if(parent == 0)
+                parent = '<em>root</em>';
+            $('#cms_page_new span.parent').html(parent);
+            $(this).children('input[name=title]').attr('value', '');
+            $(this).children('.ui-state-error').hide();
+            $(this).children('.focus').focus();
+        },
+    });
+
     $('#cms_label').dialog({
         autoOpen : false,
         title : "Label Editor",
@@ -316,5 +356,18 @@ var CMS = new Object();
         $('#CMS_Tree_Page_'+CMS.currentPage).css('font-weight', 'normal');
         CMS.currentPage = page_id;
         $('#CMS_Tree_Page_'+page_id).css('font-weight', 'bold');
+    };
+
+    CMS.pageNew = function()
+    {
+        CMS.query('templates', { }, function(success, data) {
+            if(success && data.r == 'ok') {
+                $('#cms_page_new select').text('').append('<option value=""></option>');
+                for(var i in data.d) {
+                    $('#cms_page_new select').append('<option value="'+data.d[i]+'">'+data.d[i]+'</option>');
+                }
+                $('#cms_page_new').dialog('open');
+            }
+        });
     };
 };

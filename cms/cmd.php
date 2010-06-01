@@ -79,6 +79,19 @@
         }
     }
 
+    if($q == 'templates') {
+        if($logged) {
+            $reply['r'] = 'ok';
+            $reply['d'] = array();
+            $files = scandir('../site/');
+            foreach($files as $file) {
+                $filename = basename($file);
+                if(preg_match('/(.+)\.php$/', $filename, $m))
+                    $reply['d'][] = $m[1];
+            }
+        }
+    }
+
     if($q == 'get') {
         if($logged) {
             $page_id = (int)$d['page_id'];
@@ -110,6 +123,36 @@
                 $PAGE->save();
             } catch(Exception $e) {
                 $reply['r'] = 'error';
+            }
+        }
+    }
+
+    if($q == 'page_new') {
+        if($logged) {
+            $parent_id = $d['parent_id'];
+            if($parent_id < 1)
+                $parent_id = NULL;
+            $title = $d['title'];
+            $template = $d['template'];
+
+            CMS::initDb();
+
+            $ok = true;
+            if($parent_id == NULL) {
+                $ok = false;
+                try {
+                    new CMS_Page(NULL);
+                } catch(Exception $e) {
+                    $ok = true;
+                }
+            }
+
+            if($ok) {
+                $stmt = CMS::$db->prepare('INSERT INTO page(parent_id, title, template) VALUES(?,?,?)');
+                $stmt->execute(array($parent_id, $title, $template));
+                $stmt->closeCursor();
+
+                $reply['r'] = 'ok';
             }
         }
     }

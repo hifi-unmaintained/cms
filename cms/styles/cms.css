@@ -102,3 +102,8 @@ div.hr {
 
 #cms_label { overflow: hidden; }
 #cms_label input { width: 100%; }
+
+#cms_page_new { overflow: hidden; }
+#cms_page_new input.text { width: 100%; }
+#cms_page_new .ui-state-error { display: none; overflow: hidden; margin-bottom: 0.5em; }
+#cms_page_new .ui-icon { float: left; }
