@@ -166,9 +166,9 @@ class CMS_Page
 
         try {
             if(CMS_MODE == 'view') {
-                $class::view($this->id, $name, $this->fields->$name);
+                $class::view($this->id, $name, $this->fields->$name, $options);
             } else if(CMS_MODE == 'edit') {
-                $class::edit($this->id, $name, $this->fields->$name);
+                $class::edit($this->id, $name, $this->fields->$name, $options);
             }
         } catch(Exception $e) {
             throw new Exception('Unkown field type, class not found for '.$type);

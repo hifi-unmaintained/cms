@@ -2,13 +2,15 @@
 
 class CMS_Field_Html extends CMS_Field
 {
-    static function view($page_id, $field, $value)
+    static function view($page_id, $field, $value, $options)
     {
         print $value;
     }
 
-    static function edit($page_id, $field, $value)
+    static function edit($page_id, $field, $value, $options)
     {
+        if(strlen($value) == '')
+            $value = '<em>Click to edit</em>';
         print "<div class=\"CMS_Field_Html\" onclick=\"parent.CMS.edit('{$page_id}', '{$field}', 'Html')\">{$value}</div>\n";
     }
 
