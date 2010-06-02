@@ -20,18 +20,13 @@ print <<<EOF
         {
             $('#cms_label input[name=page_id]').attr('value', page_id);
             $('#cms_label input[name=field]').attr('value', field);
-            $('#cms_label input[name=value]').attr('value', data);
+            $('#cms_label input[name=value]').attr('value', (data === null ? '' : data) );
             $('#cms_label').dialog('open');
         };
 
         CMS.Field.Label.inject = function(frame)
         {
-            var button = $(document.createElement('div')).button({label : 'Edit'});
-            button.css('font-size', '12px');
-            button.css('position', 'absolute');
-            button.css('top', '5px');
-            button.css('right', '5px');
-            $(frame).contents().find('.CMS_Field_Label').css('border','1px dotted black').css('position', 'relative').css('min-height', '1em').append(button);
+            $(frame).contents().find('.CMS_Field_Label').css('border','1px dashed black').css('min-height', '1em');
         };
 
         $('body').append(

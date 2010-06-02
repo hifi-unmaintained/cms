@@ -154,7 +154,7 @@ var CMS = {};
             buttons : {
                 'Cancel' : function() { $(this).dialog('close'); cancelCb(); },
                 'Ok' : function() { $(this).dialog('close'); okCb(); }
-            },
+            }
         });
 
         $('#cms_confirm').dialog('open');
@@ -326,7 +326,7 @@ $().ready(function() {
                 }
 
                 $('#cms_page_new').dialog('close');
-                CMS.query('page_new', { parent_id : parent_id, title : title, template : template }, CMS.updateTree);
+                CMS.query('page_new', { parent_id : parent_id, title : title, template : template }, function() { CMS.currentPage = 0; CMS.updateTree(); } );
             }
         },
         open : function() {

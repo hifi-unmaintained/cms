@@ -46,7 +46,7 @@
             </ul>
         </div>
         <div id="cms_page">
-            <iframe src=""></iframe>
+            <iframe frameborder="0" src=""></iframe>
         </div>
         <div id="cms_page_new">
             <div class="ui-state-error ui-corner-all" style="padding: 0.5em">

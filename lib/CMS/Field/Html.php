@@ -26,12 +26,7 @@ print <<<EOF
 
         CMS.Field.Html.inject = function(frame)
         {
-            var button = $(document.createElement('div')).button({label : 'Edit'});
-            button.css('font-size', '12px');
-            button.css('position', 'absolute');
-            button.css('top', '5px');
-            button.css('right', '5px');
-            $(frame).contents().find('.CMS_Field_Html').css('border','1px dotted black').css('position', 'relative').css('min-height', '1em').append(button);
+            $(frame).contents().find('.CMS_Field_Html').css('border','1px dashed black').css('min-height', '1em');
         };
 
         $('body').append(
