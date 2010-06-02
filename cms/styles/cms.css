@@ -107,3 +107,5 @@ div.hr {
 #cms_page_new input.text { width: 100%; }
 #cms_page_new .ui-state-error { display: none; overflow: hidden; margin-bottom: 0.5em; }
 #cms_page_new .ui-icon { float: left; }
+
+#cms_confirm { font-weight: bold; text-align: center; }

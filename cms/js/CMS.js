@@ -25,8 +25,12 @@ var CMS = {};
                 }
             }
             $('#cms_tree').html(str+"</ul>");
-            if(open && CMS.currentPage !== 0) {
-                CMS.pageOpen(CMS.currentPage);
+            if(open) {
+                if(CMS.currentPage !== 0) {
+                    CMS.pageOpen(CMS.currentPage);
+                } else {
+                    $('#cms_page iframe').attr('src', '');
+                }
             }
         }
     };
@@ -139,6 +143,23 @@ var CMS = {};
         });
     };
 
+    CMS.confirm = function(msg, okCb, cancelCb)
+    {
+        if(typeof cancelCb == 'undefined') {
+            cancelCb = function() { };
+        }
+
+        $('#cms_confirm').html(msg);
+        $('#cms_confirm').dialog({
+            buttons : {
+                'Cancel' : function() { $(this).dialog('close'); cancelCb(); },
+                'Ok' : function() { $(this).dialog('close'); okCb(); }
+            },
+        });
+
+        $('#cms_confirm').dialog('open');
+    };
+
     CMS.edit = function(page_id, field, type)
     {
         CMS.query('get', { page_id : page_id, field : field }, function(success, data) { CMS.editCallback(page_id, field, type, success, data); });
@@ -188,6 +209,33 @@ var CMS = {};
             }
         });
     };
+
+    CMS.pageDelete = function()
+    {
+        if(CMS.currentPage !== 0) {
+            CMS.confirm("Do you really want to delete this page?", CMS.pageDeleteConfirmed);
+        }
+    };
+
+    CMS.pageDeleteConfirmed = function()
+    {
+        CMS.query('page_delete', { page_id : CMS.currentPage }, CMS.pageDeleteCallback);
+    };
+
+    CMS.pageDeleteCallback = function(success, data)
+    {
+        if(success && data.r == 'ok') {
+            CMS.currentPage = 0;
+            CMS.updateTree();
+        }
+    }
+
+    CMS.pageSettings = function()
+    {
+        if(CMS.currentPage !== 0) {
+            //$('#cms_settings').dialog('open');
+        }
+    }
 /*}*/
 
 $().ready(function() {
@@ -226,6 +274,16 @@ $().ready(function() {
         height: 100
     });
 
+    $('#cms_confirm').dialog({
+        autoOpen : false,
+        title : "Are you sure?",
+        draggable : false,
+        resizable : false,
+        modal : true,
+        width: 'auto',
+        height: 120
+    });
+
     $('#cms_tools').dialog({
         autoOpen : false,
         title : "Management",
@@ -247,6 +305,7 @@ $().ready(function() {
         resizable : false,
         width : 400,
         height : 'auto',
+        modal : true,
         buttons : {
             "Cancel" : function(ev, ui) { $('#cms_page_new').dialog('close'); },
             "Create" : function(ev, ui) {

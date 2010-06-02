@@ -18,6 +18,7 @@
     </head>
     <body>
         <div id="cms_message"></div>
+        <div id="cms_confirm"></div>
         <div id="cms_login">
             <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
                 <span class="ui-icon ui-icon-alert"></span><span class="error"></span>

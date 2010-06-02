@@ -157,5 +157,30 @@
         }
     }
 
+    if($q == 'page_delete') {
+        if($logged) {
+            $page_id = (int)$d['page_id'];
+
+            CMS::initDb();
+
+            try {
+                $page = new CMS_Page($page_id);
+
+                if(sizeof($page->children) == 0) {
+                    if($page_id == 0 || strlen($page_id) < 1) {
+                        $stmt = CMS::$db->prepare('DELETE FROM page WHERE id IS NULL');
+                        $stmt->execute();
+                    } else {
+                        $stmt = CMS::$db->prepare('DELETE FROM page WHERE id = ?');
+                        $stmt->execute(array($page_id));
+                    }
+                    $stmt->closeCursor();
+
+                    $reply['r'] = 'ok';
+                }
+            } catch(Exception $e) { }
+        }
+    }
+
     echo json_encode($reply);
 ?>
