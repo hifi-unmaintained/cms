@@ -13,8 +13,8 @@
         <link type="text/css" href="styles/cms.css" rel="stylesheet" />	
         <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.1.custom.min.js"></script>
-        <script type="text/javascript" src="js/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
         <script type="text/javascript" src="js/CMS.js"></script>
+        <script type="text/javascript" src="fieldjs.php"></script>
     </head>
     <body>
         <div id="cms_message"></div>
@@ -57,16 +57,6 @@
             <input class="text focus" type="text" name="title" /><br />
             Template:<br />
             <select name="template"></select>
-        </div>
-        <div id="cms_tinymce">
-            <input type="hidden" name="page_id" />
-            <input type="hidden" name="field" />
-            <textarea name="value"></textarea>
-        </div>
-        <div id="cms_label">
-            <input type="hidden" name="page_id" />
-            <input type="hidden" name="field" />
-            <input type="text" name="value" />
         </div>
     </body>
 </html>

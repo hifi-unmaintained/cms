@@ -9,30 +9,65 @@ class CMS_Field_Label extends CMS_Field
 
     static function edit($page_id, $field, $value)
     {
-        print <<<EOF
-<div style="border: 1px dotted black; position: relative; overflow: visible; min-height: 25px;">
-    <a style="
-                display: block;
-                position: absolute;
-                top: 0;
-                text-align: center;
-                text-decoration: none;
-                right: 0;
-                width: 100px;
-                height: 25px;
-                background-color: #f3f3f3;
-                color: black;
-                font-weight: bold;
-                line-height: 25px;
-                font-size: 14px;
-                font-family: sans-serif;
-                border-left: 1px dotted black;
-                border-bottom: 1px dotted black;
-    " href="javascript:parent.CMS.edit('$page_id', '$field', 'label');">Edit</a>
-EOF;
-        print $value;
-        print <<<EOF
-</div>
+        print "<div class=\"CMS_Field_Label\" onclick=\"parent.CMS.edit('{$page_id}', '{$field}', 'Label')\">{$value}</div>\n";
+    }
+
+    static function onLoadJS()
+    {
+print <<<EOF
+        CMS.Field.Label = {};
+        CMS.Field.Label.edit = function(page_id, field, data)
+        {
+            $('#cms_label input[name=page_id]').attr('value', page_id);
+            $('#cms_label input[name=field]').attr('value', field);
+            $('#cms_label input[name=value]').attr('value', data);
+            $('#cms_label').dialog('open');
+        };
+
+        CMS.Field.Label.inject = function(frame)
+        {
+            var button = $(document.createElement('div')).button({label : 'Edit'});
+            button.css('font-size', '12px');
+            button.css('position', 'absolute');
+            button.css('top', '5px');
+            button.css('right', '5px');
+            $(frame).contents().find('.CMS_Field_Label').css('border','1px dotted black').css('position', 'relative').css('min-height', '1em').append(button);
+        };
+
+        $('body').append(
+            '<div id="cms_label">' +
+                '<input type="hidden" name="page_id" />' +
+                '<input type="hidden" name="field" />' +
+                '<input type="text" name="value" />' +
+            '</div>'
+        );
+
+        $('#cms_label').dialog({
+            autoOpen : false,
+            title : "Label Editor",
+            resizable : true,
+            width : 400,
+            minHeight : 110,
+            height : 'auto',
+            modal : true,
+            dialogClass : 'cms_label',
+            buttons : {
+                "Cancel" : function(ev, ui) { $('#cms_label').dialog('close'); },
+                "Save" : function(ev, ui) {
+                    $('#cms_label').dialog('close');
+                    CMS.save($('#cms_label input[name=page_id]').attr('value'), $('#cms_label input[name=field]').attr('value'), $('#cms_label input[name=value]').attr('value'));
+                }
+            },
+            open : function() {
+                $(this).children('input[name=value]').focus();
+            }
+        });
+        $('#cms_label input[name=value]').keyup(function(ev) {
+            if(ev.keyCode == 13) {
+                $('#cms_label').dialog('close');
+                CMS.save($('#cms_label input[name=page_id]').attr('value'), $('#cms_label input[name=field]').attr('value'), $('#cms_label input[name=value]').attr('value'));
+            }
+        });
 EOF;
     }
 }

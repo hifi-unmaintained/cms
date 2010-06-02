@@ -1,11 +1,7 @@
 var CMS = {};
 /*{*/
     CMS.currentPage = 0;
-
-    CMS.test = function() {
-        var foo = $('#cms_page iframe')[0].contentWindow.location.href;
-        alert(foo);
-    };
+    CMS.Field = {};
 
     CMS.updateTree = function() {
         CMS.query('tree', {}, CMS.updateTreeCallback);
@@ -151,17 +147,9 @@ var CMS = {};
     CMS.editCallback = function(page_id, field, type, success, data)
     {
         if(success && data.r == 'ok') {
-            if(type == 'label') {
-                $('#cms_label input[name=page_id]').attr('value', page_id);
-                $('#cms_label input[name=field]').attr('value', field);
-                $('#cms_label input[name=value]').attr('value', data.d);
-                $('#cms_label').dialog('open');
-            }
-            if(type == 'html') {
-                $('#cms_tinymce input[name=page_id]').attr('value', page_id);
-                $('#cms_tinymce input[name=field]').attr('value', field);
-                $('#cms_tinymce textarea[name=value]').text(data.d);
-                $('#cms_tinymce').dialog('open');
+            if(typeof CMS.Field[type] != 'undefined') {
+                CMS.Field[type].edit(page_id, field, data.d);
+                return;
             }
         }
     };
@@ -294,87 +282,27 @@ $().ready(function() {
         }
     });
 
-    $('#cms_label').dialog({
-        autoOpen : false,
-        title : "Label Editor",
-        resizable : true,
-        width : 400,
-        minHeight : 110,
-        height : 'auto',
-        modal : true,
-        dialogClass : 'cms_label',
-        buttons : {
-            "Cancel" : function(ev, ui) { $('#cms_label').dialog('close'); },
-            "Save" : function(ev, ui) {
-                $('#cms_label').dialog('close');
-                CMS.save($('#cms_label input[name=page_id]').attr('value'), $('#cms_label input[name=field]').attr('value'), $('#cms_label input[name=value]').attr('value'));
-            }
-        },
-        open : function() {
-            $(this).children('input[name=value]').focus();
-        }
-    });
-    $('#cms_label input[name=value]').keyup(function(ev) {
-        if(ev.keyCode == 13) {
-            $('#cms_label').dialog('close');
-            CMS.save($('#cms_label input[name=page_id]').attr('value'), $('#cms_label input[name=field]').attr('value'), $('#cms_label input[name=value]').attr('value'));
-        }
-    });
-
-    $('#cms_tinymce').dialog({
-        autoOpen : false,
-        title : "HTML Editor",
-        resizable : false,
-        width : 'auto',
-        height : 'auto',
-        modal : true,
-        minWidth : 800,
-        minHeight : 500,
-        dialogClass : 'cms_tinymce',
-        zIndex : 1,
-        buttons : {
-            "Cancel" : function(ev, ui) { $('#cms_tinymce').dialog('close'); },
-            "Save" : function(ev, ui) {
-                $('#cms_tinymce').dialog('close');
-                CMS.save($('#cms_tinymce input[name=page_id]').attr('value'), $('#cms_tinymce input[name=field]').attr('value'), $('#cms_tinymce textarea[name=value]').attr('value'));
-            }
-        },
-        open : function() {
-            $('#cms_tinymce textarea').tinymce({
-                    // Location of TinyMCE script
-                    script_url : 'js/tinymce/jscripts/tiny_mce/tiny_mce.js',
-
-                    // General options
-                    theme : "advanced",
-                    plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
-                    width: '800px',
-                    height: '450px',
-
-                    // Theme options
-                    theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-                    theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-                    theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-                    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
-                    theme_advanced_toolbar_location : "top",
-                    theme_advanced_toolbar_align : "left",
-                    theme_advanced_statusbar_location : "bottom",
-                    theme_advanced_resizing : true
-            });
-        },
-        close : function() {
-            $('#cms_tinymce textarea').tinymce().remove();
-        }
-    });
-
     $('#cms_page iframe').load(function() {
-        var uri = $('#cms_page iframe')[0].contentWindow.location.href;
+        var uri = $(this)[0].contentWindow.location.href;
         if(uri) {
             var m = uri.match(/id=(\d+)$/);
             if(m) {
                 CMS.pageOpen(m[1], true);
             }
         }
+
+        /* inject current jquery ui theme */
+        $(this).contents().find('head').append('<link type="text/css" href="styles/themes/cupertino/jquery-ui-1.8.1.custom.css" rel="stylesheet" />');
+
+        for(var i in CMS.Field) {
+            CMS.Field[i].inject(this);
+        }
     });
+
+    /* this will initialize all Field stuff */
+    if(typeof CMS.onLoadJS == 'function') {
+        CMS.onLoadJS();
+    }
 
     CMS.checkSession();
 });
