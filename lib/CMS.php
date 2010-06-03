@@ -28,7 +28,7 @@ class CMS
         if($_SERVER['HTTP_PORT'] == 443)
             $proto = 'https';
 
-        return "{$proto}://{$_SERVER['HTTP_HOST']}".dirname($_SERVER['SCRIPT_NAME'])."/";
+        return "{$proto}://{$_SERVER['HTTP_HOST']}".dirname($_SERVER['SCRIPT_NAME'])."/" . (CMS_MODE == 'edit' ? '../' : '');
     }
 
     function __construct() { throw new Exception('You should not construct CMS, ever!'); }
