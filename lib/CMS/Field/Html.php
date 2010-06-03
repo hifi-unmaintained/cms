@@ -22,7 +22,7 @@ print <<<EOF
         {
             $('#cms_tinymce input[name=page_id]').attr('value', page_id);
             $('#cms_tinymce input[name=field]').attr('value', field);
-            $('#cms_tinymce textarea[name=value]').text(data);
+            CMS.Field.Html.buffer = data;
             $('#cms_tinymce').dialog('open');
         }
 
@@ -79,7 +79,14 @@ print <<<EOF
                         theme_advanced_toolbar_location : "top",
                         theme_advanced_toolbar_align : "left",
                         theme_advanced_statusbar_location : "bottom",
-                        theme_advanced_resizing : true
+                        theme_advanced_resizing : true,
+                        cleanup_on_startup : true,
+                        cleanup : true,
+                        setup : function(ed) {
+                            ed.onInit.add(function() {
+                                $('#cms_tinymce textarea').tinymce().setContent(CMS.Field.Html.buffer);
+                            });
+                        }
                 });
             },
             close : function() {
