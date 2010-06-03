@@ -182,5 +182,72 @@
         }
     }
 
+    if($q == 'page_meta_get') {
+        if($logged) {
+            $page_id = (int)$d['page_id'];
+
+            CMS::initDb();
+
+            try {
+                $page = new CMS_Page($page_id);
+
+                $reply['r'] = 'ok';
+                $reply['d']['templates'] = array();
+                $files = scandir('../site/');
+                foreach($files as $file) {
+                    $filename = basename($file);
+                    if(preg_match('/(.+)\.php$/', $filename, $m))
+                        $reply['d']['templates'][] = $m[1];
+                }
+
+                $reply['d']['uri'] = $page->realUri;
+                $reply['d']['redirect'] = $page->redirect;
+                $reply['d']['title'] = $page->title;
+                $reply['d']['description'] = $page->description;
+                $reply['d']['keywords'] = $page->keywords;
+                $reply['d']['template'] = $page->template;
+
+                $reply['r'] = 'ok';
+            } catch(Exception $e) { }
+        }
+    }
+
+    if($q == 'page_meta_set') {
+        if($logged) {
+            $page_id = (int)$d['page_id'];
+
+            CMS::initDb();
+
+            try {
+                $page = new CMS_Page($page_id);
+
+                $keys = array('uri', 'redirect', 'title', 'description', 'keywords', 'template');
+
+                $upd = array();
+                $sql = 'UPDATE page SET ';
+                $first = true;
+                foreach($keys as $key) {
+                    if(isset($d[$key])) {
+                        if($first)
+                            $first = false;
+                        else
+                            $sql .= ', ';
+                        $sql .= " $key = ".CMS::$db->quote($d[$key]);
+                    }
+                }
+                $sql .= " WHERE id = {$page->id}";
+
+                CMS::$db->query($sql);
+
+                print $sql;
+
+                $reply['r'] = 'ok';
+
+            } catch(Exception $e) {
+                print_r($e);
+            }
+        }
+    }
+
     echo json_encode($reply);
 ?>

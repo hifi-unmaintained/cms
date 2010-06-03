@@ -102,6 +102,9 @@ class CMS_Page
             }
         }
 
+        if($key == 'realUri')
+            $key = 'uri';
+
         if(property_exists($this->data, $key))
             return $this->data->$key;
 

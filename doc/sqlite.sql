@@ -7,7 +7,7 @@ PRAGMA foreign_keys = 1;
 CREATE TABLE page (
     id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     parent_id       INTEGER DEFAULT NULL,
-    uri             TEXT UNIQUE NULL,
+    uri             TEXT NULL,
     redirect        TEXT NULL, -- if not null, redirect here (http(s):// -> outside, others are uri names)
     template        TEXT NULL, -- template file name
     title           TEXT NULL,

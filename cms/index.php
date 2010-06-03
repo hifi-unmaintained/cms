@@ -63,6 +63,23 @@
                 Template:<br />
                 <select name="template"></select>
             </div>
+            <div id="cms_page_meta">
+                <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
+                    <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+                </div>
+                Uri:<br />
+                <input class="text focus" type="text" name="uri" /><br />
+                Redirect (relative or absolute uri):<br />
+                <input class="text" type="text" name="redirect" /><br />
+                Title (browser):<br />
+                <input class="text" type="text" name="title" /><br />
+                Description (meta):<br />
+                <input class="text" type="text" name="description" /><br />
+                Keywords (meta):<br />
+                <input class="text" type="text" name="keywords" /><br />
+                Template:<br />
+                <select name="template"></select>
+            </div>
         </div>
     </body>
 </html>
