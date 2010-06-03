@@ -210,6 +210,23 @@ var CMS = {};
         });
     };
 
+    CMS.pageNewSave = function()
+    {
+        var title = $('#cms_page_new input[name=title]').attr('value');
+        var template = $('#cms_page_new select[name=template]').val();
+        var parent_id = CMS.currentPage ? CMS.currentPage : null;
+
+        if(title.length === 0) {
+            $('#cms_page_new .error').html("Title can't be empty.");
+            $('#cms_page_new .ui-state-error').show();
+            $('#cms_page_new .focus').focus();
+            return;
+        }
+
+        $('#cms_page_new').dialog('close');
+        CMS.query('page_new', { parent_id : parent_id, title : title, template : template }, function() { CMS.currentPage = 0; CMS.updateTree(); } );
+    };
+
     CMS.pageDelete = function()
     {
         if(CMS.currentPage !== 0) {
@@ -255,7 +272,7 @@ var CMS = {};
                 }
             });
         }
-    }
+    };
 
     CMS.pageSettingsSave = function()
     {
@@ -275,7 +292,7 @@ var CMS = {};
 
         $('#cms_page_meta').dialog('close');
         CMS.query('page_meta_set', { page_id : CMS.currentPage, title : title, template : template, redirect : redirect, uri : uri, description : description, keywords : keywords }, function() { CMS.updateTree(); CMS.pageOpen(CMS.currentPage); } );
-    }
+    };
 /*}*/
 
 $().ready(function() {
@@ -348,21 +365,7 @@ $().ready(function() {
         modal : true,
         buttons : {
             "Cancel" : function(ev, ui) { $('#cms_page_new').dialog('close'); },
-            "Create" : function(ev, ui) {
-                var title = $('#cms_page_new input[name=title]').attr('value');
-                var template = $('#cms_page_new select[name=template]').val();
-                var parent_id = CMS.currentPage ? CMS.currentPage : null;
-
-                if(title.length === 0) {
-                    $('#cms_page_new .error').html("Title can't be empty.");
-                    $('#cms_page_new .ui-state-error').show();
-                    $('#cms_page_new .focus').focus();
-                    return;
-                }
-
-                $('#cms_page_new').dialog('close');
-                CMS.query('page_new', { parent_id : parent_id, title : title, template : template }, function() { CMS.currentPage = 0; CMS.updateTree(); } );
-            }
+            "Create" : function(ev, ui) { CMS.pageNewSave(); }
         },
         open : function() {
             var parent = CMS.currentPage;
@@ -373,6 +376,11 @@ $().ready(function() {
             $(this).children('input[name=title]').attr('value', '');
             $(this).children('.ui-state-error').hide();
             $(this).children('.focus').focus();
+        }
+    });
+    $('#cms_page_new input').keyup(function(ev) {
+        if(ev.keyCode == 13) {
+            CMS.pageNewSave();
         }
     });
 
