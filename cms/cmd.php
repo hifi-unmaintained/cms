@@ -239,13 +239,9 @@
 
                 CMS::$db->query($sql);
 
-                print $sql;
-
                 $reply['r'] = 'ok';
 
-            } catch(Exception $e) {
-                print_r($e);
-            }
+            } catch(Exception $e) { }
         }
     }
 
