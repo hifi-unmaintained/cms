@@ -358,6 +358,8 @@ $().ready(function() {
         }
     });
 
+    $('#cont').show();
+
     /* this will initialize all Field stuff */
     if(typeof CMS.onLoadJS == 'function') {
         CMS.onLoadJS();

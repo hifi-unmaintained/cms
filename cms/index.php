@@ -17,47 +17,52 @@
         <script type="text/javascript" src="fieldjs.php"></script>
     </head>
     <body>
-        <div id="cms_message"></div>
-        <div id="cms_confirm"></div>
-        <div id="cms_login">
-            <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
-                <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+        <noscript>
+            Management requires a modern browser (Firefox 2+, Opera 9+, Chrome 1.0+, Safari 3.1+, Internet Explorer 7+) and JavaScript to work.
+        </noscript>
+        <div id="cont" style="display: none">
+            <div id="cms_message"></div>
+            <div id="cms_confirm"></div>
+            <div id="cms_login">
+                <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
+                    <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+                </div>
+                Username:<br />
+                <input class="focus" type="text" name="username" /><br />
+                Password:<br />
+                <input type="password" name="password" />
             </div>
-            Username:<br />
-            <input class="focus" type="text" name="username" /><br />
-            Password:<br />
-            <input type="password" name="password" />
-        </div>
-        <div id="cms_tools">
-            <div id="cms_tree"></div>
+            <div id="cms_tools">
+                <div id="cms_tree"></div>
 
-            <div class="ui-state-default hr"><hr /></div>
+                <div class="ui-state-default hr"><hr /></div>
 
-            <ul class="menu">
-                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageNew();">New page</a></li>
-                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageDelete();">Delete page</a></li>
-                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageSettings();">Page settings</a></li>
-            </ul>
+                <ul class="menu">
+                    <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageNew();">New page</a></li>
+                    <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageDelete();">Delete page</a></li>
+                    <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.pageSettings();">Page settings</a></li>
+                </ul>
 
-            <div class="ui-state-default hr"><hr /></div>
+                <div class="ui-state-default hr"><hr /></div>
 
-            <ul class="menu">
-                <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.logout();">Logout</a></li>
-            </ul>
-        </div>
-        <div id="cms_page">
-            <iframe frameborder="0" src=""></iframe>
-        </div>
-        <div id="cms_page_new">
-            <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
-                <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+                <ul class="menu">
+                    <li><span class="ui-icon ui-icon-carat-1-e"></span><a href="javascript:CMS.logout();">Logout</a></li>
+                </ul>
             </div>
-            Parent:<br />
-            <span class="parent"></span><br />
-            Title:<br />
-            <input class="text focus" type="text" name="title" /><br />
-            Template:<br />
-            <select name="template"></select>
+            <div id="cms_page">
+                <iframe frameborder="0" src=""></iframe>
+            </div>
+            <div id="cms_page_new">
+                <div class="ui-state-error ui-corner-all" style="padding: 0.5em">
+                    <span class="ui-icon ui-icon-alert"></span><span class="error"></span>
+                </div>
+                Parent:<br />
+                <span class="parent"></span><br />
+                Title:<br />
+                <input class="text focus" type="text" name="title" /><br />
+                Template:<br />
+                <select name="template"></select>
+            </div>
         </div>
     </body>
 </html>

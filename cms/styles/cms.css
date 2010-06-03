@@ -7,6 +7,10 @@ html,body {
     font-size: 10px;
 }
 
+noscript {
+    font-size: 1.5em;
+}
+
 #cms_page {
     position: absolute;
     left: 0;
