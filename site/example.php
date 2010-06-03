@@ -11,7 +11,6 @@
         <h1><?php $PAGE->field('header', 'label'); ?></h1>
         <hr />
             <ul>
-                <li><a href="<?php echo CMS_Page::get()->uri ?>"><?php echo CMS_Page::get()->title ?></a></li>
                 <?php foreach(CMS_Page::get()->children as $child) { ?>
                 <li><a href="<?php echo $child->uri ?>"><?php echo $child->title ?></a></li>
                 <?php } ?>
