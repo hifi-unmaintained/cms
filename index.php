@@ -26,5 +26,26 @@
 
     unset($uri);
 
+    if(strlen($PAGE->redirect) > 0) {
+        header('HTTP/1.1 301 Moved Permanently');
+        try {
+            $redirect = new CMS_Page($PAGE->redirect);
+            header("Location: {$redirect->uri}");
+        } catch(Exception $e) {
+            header("Location: {$PAGE->redirect}");
+        }
+        exit;
+    }
+
+    try {
+        $PAGE->getTemplate();
+    } catch(Exception $e) {
+        header('HTTP/1.1 404 Page Not Found');
+        header('Content-type: text/plain');
+        echo "404 Page Not Found\n\n";
+        echo "Exception: ".$e->getMessage();
+        exit;
+    }
+
     require_once($PAGE->getTemplate());
 ?>

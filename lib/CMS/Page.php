@@ -11,7 +11,7 @@ class CMS_Page
 
     function __construct($arg)
     {
-        if(is_array($arg) || is_object($art)) {
+        if(is_array($arg) || is_object($arg)) {
             $this->data = (object)$arg;
             return;
         }
@@ -36,6 +36,7 @@ class CMS_Page
         foreach($row as $key => $value) {
             $this->data->$key = $value;
         }
+
     }
 
     static function get($arg = NULL)

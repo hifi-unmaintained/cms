@@ -32,5 +32,17 @@
 
     unset($uri);
 
-    require_once($PAGE->getTemplate());
+    if(strlen($PAGE->redirect) > 0) {
+        $msg = "This page is a redirect to '{$PAGE->redirect}'.";
+        require_once('notemplate.php');
+    } else {
+        try {
+            $PAGE->getTemplate();
+        } catch(Exception $e) {
+            header('Content-type: text/plain');
+            echo $e->getMessage();
+            exit;
+        }
+        require_once($PAGE->getTemplate());
+    }
 ?>
