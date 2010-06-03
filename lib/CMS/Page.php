@@ -96,7 +96,7 @@ class CMS_Page
 
         if($key == 'uri') {
             if(CMS_MODE == 'edit')
-                return CMS::baseUri().'page.php?id='.$this->id;
+                return CMS::baseUri(true).'page.php?id='.$this->id;
 
             if(CMS::$config->uri == 'id') {
                 return CMS::baseUri().'index.php?id='.$this->id;
